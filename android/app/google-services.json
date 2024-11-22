@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "181893875604",
+    "project_id": "fir-1b8b4",
+    "storage_bucket": "fir-1b8b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:181893875604:android:a6d8e99ed1b9ff73747181",
+        "android_client_info": {
+          "package_name": "com.example.fharmony"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuabbocufUmJsl6dW0IjC1YzUUPrz57as"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
