@@ -1,12 +1,16 @@
 
+import 'package:fharmony/pages/customer/passwordreset.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 
 import 'package:fharmony/features/toast.dart';
 import 'package:fharmony/features/userauthentication.dart';
-import 'customerhome.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'app/routes/app_pages.dart';
 import 'customersignup.dart';
+import 'customerintro.dart';
 class CustomerLogin extends StatefulWidget{
   @override
   UserLogin  createState(){
@@ -39,9 +43,12 @@ class UserLogin extends State<CustomerLogin>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(backgroundColor: Colors.white,),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          iconTheme: IconThemeData(
+          color: Colors.black, // Change the arrow color
+        ),),
         backgroundColor: Colors.white,
         body:Center(
           child:Container(
@@ -144,8 +151,25 @@ class UserLogin extends State<CustomerLogin>{
                           ),
                         ),
                       ),
-                      SizedBox(height: 20,),
+                      SizedBox(height: 10,),
+                      Padding(
+                        padding:  EdgeInsets.only(left:198),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ResetPwPage()));
+                          },
+                          child: Text(
+                            "Forget Password ?",
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Color(0xFF0F52BA),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
 
+                        ),
+                      ),
+                      SizedBox(height: 12,),
                       Container(
                         height: 60,
                         child: ElevatedButton(
@@ -173,7 +197,7 @@ class UserLogin extends State<CustomerLogin>{
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>(CustomerSignUp())));
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>(CustomerIntro())));
                             },
                             child: Text(
                               "Sign Up",
@@ -188,7 +212,7 @@ class UserLogin extends State<CustomerLogin>{
                       ),
 
                       Image.asset(
-                        'assets/fharmonylogo.png',
+                        'assets/images/fharmonylogo.png',
                         height: 350,
                         width: 350,
                       )
@@ -216,12 +240,14 @@ class UserLogin extends State<CustomerLogin>{
 
     if (user != null) {
       showToastMsg(message: "User is successfully signed in");
-      Navigator.pushReplacementNamed(context,  '/home',arguments: {'email':email});
-    } //else {
+      Navigator.pop(context);
+      Get.offNamed(Routes.WELCOME,arguments: {
+      'uid': user.uid,
+    }); //else {
     //showToastMsg(message: "some error occured");
     //}
   }
 }
-
+}
 
 

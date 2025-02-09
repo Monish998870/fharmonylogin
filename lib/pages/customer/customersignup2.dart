@@ -3,7 +3,10 @@ import 'package:fharmony/features/toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fharmony/features/userauthentication.dart';
-import 'customerhome.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import '../home.dart';
+import 'app/routes/app_pages.dart';
 import 'customerlogin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 class CustomerSignUp2 extends StatefulWidget{
@@ -37,7 +40,7 @@ class  UserSignUp2 extends State<CustomerSignUp2>{
     print(data);
     return Scaffold(
         resizeToAvoidBottomInset: false,
-       // appBar: AppBar(backgroundColor: Colors.white,),
+        appBar: AppBar(backgroundColor: Colors.white,automaticallyImplyLeading: false,),
         backgroundColor: Colors.white,
         body: Center(
           child: Container(
@@ -47,7 +50,7 @@ class  UserSignUp2 extends State<CustomerSignUp2>{
                 key: formKey,
                 child: Column(
                   children: [
-                    SizedBox(height: 80,),
+                    //SizedBox(height: 80,),
                     Text("SignUp", style: TextStyle(fontSize: 50),
                         textAlign: TextAlign.center),
                     SizedBox(height: 20,),
@@ -58,10 +61,20 @@ class  UserSignUp2 extends State<CustomerSignUp2>{
                       keyboardType: TextInputType.name,
                       controller: emailcontroller,
                       validator: (String? value) {
-                        if (0 == value!.length)
-                          return " Enter Your Email ";
-                        else
-                          return null;
+                        RegExp emailRegex = RegExp(
+                            r'^[a-zA-Z0-9]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+                        );
+
+
+                        if (value!.isEmpty) {
+                          return 'Enter Your Email';
+                        } else {
+                          if (!emailRegex.hasMatch(value!)) {
+                            return 'Enter Valid Email';
+                          } else {
+                            return null;
+                          }
+                        }
                       },
                       decoration: InputDecoration(
                         // floatingLabelStyle: TextStyle(color:focusNode.hasFocus? Colors.blue:Colors.grey[600]),
@@ -235,7 +248,19 @@ class  UserSignUp2 extends State<CustomerSignUp2>{
                         ),
                         GestureDetector(
                             onTap: () {
-                              Navigator.pushNamedAndRemoveUntil(context, "/customerlogin", (r) => false);
+
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                             // Navigator.push(
+                             //   context,
+                             //   MaterialPageRoute(builder: (context) => Home()),
+                             // );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => CustomerLogin()),
+                              );
+
+                            //  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => CustomerLogin()),  ModalRoute.withName('/customersignup'));
                             },
                             child: Text(
                               "Login",
@@ -273,8 +298,12 @@ class  UserSignUp2 extends State<CustomerSignUp2>{
     });
     if (user != null) {
       showToastMsg(message: "User is successfully created");
-
-      Navigator.pushNamedAndRemoveUntil(context, "/customerhome", (r) => false,arguments: {'email':email});
+      Navigator.pop(context);
+      Navigator.pop(context);
+      Get.offNamed(Routes.WELCOME,arguments: {
+        'uid': user.uid,
+      });
+    //  Navigator.pushNamedAndRemoveUntil(context, "/home_view", (r) => false,arguments: {'uid':user.uid});
     } //else {
     //showToastMsg(message: "Some error happend");
     //}

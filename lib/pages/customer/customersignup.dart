@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../features/userauthentication.dart';
+import 'customerlogin.dart';
 
 class CustomerSignUp extends StatefulWidget{
   @override
@@ -32,7 +33,7 @@ class  UserSignUp extends State<CustomerSignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(backgroundColor: Colors.white,),
+        appBar: AppBar(backgroundColor: Colors.white,automaticallyImplyLeading: false,),
         backgroundColor: Colors.white,
         body: Center(
           child: Container(
@@ -133,8 +134,12 @@ class  UserSignUp extends State<CustomerSignUp> {
                       validator: (String? value) {
                         if (0 == value!.length)
                           return " Enter Your Phone Number ";
-                        else
-                          return null;
+                        else {
+                          if(!(10==value!.length))
+                            return " Enter Valid Phone Number ";
+                          else
+                            return null;
+                        }
                       },
                       decoration: InputDecoration(
                         // floatingLabelStyle: TextStyle(color:focusNode.hasFocus? Colors.blue:Colors.grey[600]),
@@ -223,8 +228,7 @@ class  UserSignUp extends State<CustomerSignUp> {
                         ),
                         GestureDetector(
                             onTap: () {
-                              Navigator.pushNamedAndRemoveUntil(context,
-                                  "/customerlogin", (r) => false);
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>(CustomerLogin())));
                             },
                             child: Text(
                               "Login",
